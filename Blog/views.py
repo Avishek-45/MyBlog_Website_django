@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponse
-from .models import Blog
+from .models import Blog,contact
 from django.contrib import messages 
 
 
@@ -18,7 +18,17 @@ def blogpost(request ,slug):
     return render(request,'Blog/blogpost.html',{'blog':blog})
 
 
-def contact(request):
+def CONTACT(request):
+    if  request.method=='POST':
+        name=request.POST['name']
+        phone=request.POST['phone']
+        email=request.POST['email']
+        content=request.POST['content']
+        cont=contact(name=name,phone=phone,email=email,content=content)
+        cont.save()
+        print(name,  phone, email, content)
+
+
     return render(request,'Blog/contact.html')
 
 def search(request):

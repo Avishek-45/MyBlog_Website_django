@@ -10,5 +10,29 @@
 </style>
 {% endblock css %}
 {{% block body %}
-<div class="container"> This is a cintact</div>
+<div class="container my-4"> 
+      <form method="POST" action="/contact/">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" aria-describedby="namehelp">
+            </div>
+            <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                  <small id="emailHelp" class="form-text text-muted"> We'll never share your email with anyone else. </small>
+                </div>
+            <div class="form-group">
+              <label for="phone">phone</label>
+              <input type="phone" class="form-control" name="phone" id="phone">
+            </div>
+            <div class="form-group">
+                  <label for="content">Any queries? Feek free to ask!!!</label><br>
+                  <textarea name="content" id="content" name="content" cols="100" rows="5"></textarea>
+                </div>
+           
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+</div>
 {% endblock body %}}
