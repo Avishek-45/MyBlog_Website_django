@@ -1,5 +1,7 @@
 from django.shortcuts import render,HttpResponse
 from .models import Blog
+from django.contrib import messages 
+
 
 # Create your views here.
 
@@ -20,4 +22,15 @@ def contact(request):
     return render(request,'Blog/contact.html')
 
 def search(request):
-    return render(request,'Blog/search.html')
+    query=request.GET['query']
+    if len(query)>78:
+        allposts=Blog.objects.none()
+    else:
+        allpostsTitle=Blog.objects.filter(title__icontains=query)
+        allpostsContent=Blog.objects.filter(content__icontains=query)
+        allposts= allpostsTitle.union(allpostsContent)
+
+    if allposts.count()== 0:
+        messages.warning(request,"No serach result found.Please refine your query")
+
+    return render(request,'Blog/search.html',{'blogs':allposts,'query':query})
