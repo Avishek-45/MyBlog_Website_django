@@ -18,10 +18,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">MyBlogs</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -40,11 +37,15 @@
         </li>
       </ul>
         <ul class="navbar-nav ">
+        <li>
         <form action='/search' method='GET' class="form-inline ml-2 my-lg-0">
           <input class="form-control ml-sm-2" type="search" placeholder="Search" aria-label="Search" name="query"
             id="search">
           <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Search</button>
-
+        </form>
+        </li>
+        <li>
+        
             <!-- Used for diplaying template after and before login -->
           {% if user.is_authenticated%}
           <ul>
@@ -52,14 +53,20 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Welcome {{request.user}} 
               </a>
-              <div class="dropdown-menu mr-2" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/logout/">Logout</a>
+              <div class="dropdown-menu mr-2 bg-dark" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" >
+                  <form method="POST" action="/logout/">
+                    {% csrf_token %}  
+                      <input type="submit" value="Logout" class="btn btn-outline-success">
+                  </form>
+
+                
+                </a>
                
               </div>
             </li>
           </ul>
-          
-
+        
           {%else%}
           <!-- Button trigger modal for Login -->
         <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#Loginmodal">
@@ -71,7 +78,7 @@
           Signup
         </button>
         {%endif%}
-        </form>
+        </li>
         </div>
   </nav>
 

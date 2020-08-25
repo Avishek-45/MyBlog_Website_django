@@ -3,10 +3,10 @@ from .models import Blog,contact
 from django.contrib import messages 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from django.db import IntegrityError
 
 
-# Create your views here.
-
+    # HTML pages
 def home(request):
     return render(request,'Blog/index.html')
 
@@ -14,11 +14,9 @@ def blog(request):
     blog=Blog.objects.all()
     return render(request,'Blog/bloghome.html',{'blogs':blog})
 
-
 def blogpost(request ,slug):
     blog=Blog.objects.filter(slug=slug).first()
     return render(request,'Blog/blogpost.html',{'blog':blog})
-
 
 def CONTACT(request):
     if  request.method=='POST':
@@ -45,7 +43,7 @@ def search(request):
 
     return render(request,'Blog/search.html',{'blogs':allposts,'query':query})
 
-
+# Authentiaction apis
 def handlesignup(request):
     if request.method=='POST':
         username=request.POST['username']
@@ -68,14 +66,23 @@ def handlesignup(request):
             messages.error(request," Passwords doesnot matches. !!!")
             return redirect('home')
 
-        # creating users
-        myuser=User.objects.create_user(username,email,pass1)
-        myuser.first_name=firstname
-        myuser.last_name=lastname
-        myuser.save()
-        messages.success(request,"Successfully created account!!")
-        return redirect('home')
+        
+        if pass1==pass2:
+            try:
+                # creating users
+                myuser=User.objects.create_user(username,email,pass1)
+                myuser.first_name=firstname
+                myuser.last_name=lastname
+                myuser.save()
+                messages.success(request,"Successfully created account!!")
+                return redirect('home')
 
+            # For validaing if the username is already in database or not.and handling it 
+            except IntegrityError:
+                messages.error(request," Please choose another user name !!!")
+                return redirect('home')
+        else:
+            return HttpResponse("404 - Not Found")
     else:
         return HttpResponse("404 - Not Found")
 
@@ -97,9 +104,9 @@ def handlelogin(request):
         return HttpResponse('404 - Not Found')
 
 def handlelogout(request):
-    # if request.method == "POST":
-    logout(request)
-    messages.success(request,"Successfully Logged out!!")
-    return redirect('home')
-    # else:
-    #     return HttpResponse('404 - Not Found')
+    if request.method == 'POST':
+        logout(request)
+        messages.success(request,"Successfully Logged out!!")
+        return redirect('home')
+    else:
+        return HttpResponse('404 - Not Found')
