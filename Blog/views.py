@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.db import IntegrityError
+from django.core.paginator import Paginator
+
 
 
     # HTML pages
@@ -11,8 +13,12 @@ def home(request):
     return render(request,'Blog/index.html')
 
 def blog(request):
-    blog=Blog.objects.all()
-    return render(request,'Blog/bloghome.html',{'blogs':blog})
+    #pagination logics ra blogs haru
+    page_obj=Blog.objects.all()
+    paginator = Paginator(page_obj, 6) # Show 6 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)   #jun page haru request gareko tesko object haru matra aauxa
+    return render(request,'Blog/bloghome.html',{'page_obj': page_obj})
 
 def blogpost(request ,slug):
     blog=Blog.objects.filter(slug=slug).first()
@@ -36,6 +42,7 @@ def search(request):
         #icontains filters  the titles and contents all word or characters
         allpostsTitle=Blog.objects.filter(title__icontains=query)
         allpostsContent=Blog.objects.filter(content__icontains=query)
+        allpostsContent=Blog.objects.filter(Author__icontains=query)
         allposts= allpostsTitle.union(allpostsContent)
 
     if allposts.count()== 0:
