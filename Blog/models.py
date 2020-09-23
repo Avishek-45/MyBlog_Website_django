@@ -9,6 +9,7 @@ class Blog(models.Model):
     content=RichTextField(blank=True , null=True)
     short_desc=models.CharField(max_length=300,default="")
     Author=models.CharField(max_length=15,default="")
+    Blog_picture=models.ImageField(default="code.jpg",null=True,blank=True)
     slug=models.CharField(max_length=100)
     time=models.DateTimeField(blank=True)
 
