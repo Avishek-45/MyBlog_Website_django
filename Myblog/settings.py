@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ')h%lp$8*gnk+siamua3(p2p0uwh!24&&%*ivu9d5kwz8-9(9!l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['avishekguragain.pythonanywhere.com']
 
 
 # Application definition
@@ -123,14 +123,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL  = '/images/'
+MEDIA_URL  = '/media/'
 
-MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
-STATICFILES_DIRS = [
-    "static"
-    
-]
+
+STATIC_ROOT ="/home/AvishekGuragain/MyBlog_Website_django/static"
 
 MESSAGE_TAGS = {
     messages.ERROR:'danger'
