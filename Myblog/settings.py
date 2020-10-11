@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Blog.apps.BlogConfig',
-    'ckeditor'
+    'ckeditor',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
@@ -123,15 +124,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL  = '/images/'
+MEDIA_URL = '/images/'
 
-MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 STATICFILES_DIRS = [
     "static"
-    
+
 ]
 
 MESSAGE_TAGS = {
-    messages.ERROR:'danger'
+    messages.ERROR: 'danger'
 }

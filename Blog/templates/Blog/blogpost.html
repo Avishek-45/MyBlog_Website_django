@@ -1,20 +1,122 @@
-{% extends 'Blog/base.html' %}
-{% load static %}
+{% extends 'Blog/base.html' %} {% load static %} {% load humanize %}
+{% load extras %}
+<!-- for template tag -->
 {% block css %}
-<link href="{% static 'css/blogpost.css' %}" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Raleway:100,400,400i,500i,600,900&display=swap" rel="stylesheet">
-{% endblock css %}
-{{% block body %}
+<link href="{% static 'css/blogpost.css' %}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,400,400i,500i,600,900&display=swap" rel="stylesheet" />
+{% endblock css %} {{% block body %}
 
-<div id="article">
-  <img src="{{ blog.Blog_picture.url }}" alt="" id="cover-image"/>
+<div class='container1'>
+  <!-- social media -->
+<div class="icon-bar">
+  <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+  <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+  <a href="#" class="google"><i class="fa fa-google"></i></a>
+  <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+  <a href="#" class="youtube"><i class="fa fa-youtube"></i></a>
+</div>
+
+<div id="article" class="col-12 col-sm-10 col-md-8">
+  <img src="{{ blog.Blog_picture.url }}" alt="" id="cover-image" />
 <div class="blog-meta">
   <h1>{{ blog.title }}</h1>
-  <p class="author"> {{ blog.Author}} <span class="date"> | {{ blog.time }}</span></p>
+  <p class="author">
+    {{ blog.Author}} <span class="date"> | {{ blog.time }}</span>
+  </p>
 </div>
-<div class="blog-content">
-  {{ blog.content|safe }}
+<div class="blog-content">{{ blog.content|safe }}</div>
+<hr />
 </div>
-<hr>
+
+
+
+<!-- comments starts -->
+<div class="form-group container">
+  {% if request.user.is_authenticated %}
+  <form action="{%url 'postcomment'%}" method="POST">
+    {% csrf_token %}
+
+    <label for="comment">Post your comments:</label>
+    <input type="text" class="form-control" name="comment" placeholder="Enter your comment here." /><br />
+
+    <input type="hidden" name="postsno" value="{{blog.sno}}" />
+    <input type="hidden" name="parentsno" value="" />
+    <input type="submit" value="submit" class="btn btn-primary" />
+  </form>
+  {% else %}
+  <p>Login required to post a comment!</p>
+  {% endif %}
 </div>
+
+<div class="container">
+  <h3 class="my-3">Comments({{comments.count}})</h3>
+  {% for comments in comments %}
+  <div class="row mx-0">
+    <div class="col-1  col-sm-1 col-md-1 mx-0">
+      <img src="{%static 'images/profile.png'%}" class="rounded   w-100" />
+    </div>
+    <!-- added humanize in seeting and naturaltime in timestamp  -->
+    <div class="col-11 col-sm-11 col-md-11 mx-0 mb-3">
+      <b>{{comments.user}}</b>
+      <span class="badge badge-secondary">{{comments.Timestamp|naturaltime}}</span>
+      <br />
+      {{comments.comment}}<br>
+      {% comment %} for reply section {% endcomment %}
+      {% if request.user.is_authenticated %}
+      <span><a data-toggle="collapse" href="#collapseExample" data-target="#reply{{comments.sno}}" role="button"
+          aria-expanded="false" aria-controls="collapseExample">
+          Reply</span>
+      </a><br />
+      {% comment %} Used collapse link: jun parent post ma click garyo teskai ma matra reply khulxa
+      {% endcomment %}
+
+      <div class="collapse" id="reply{{comments.sno}}">
+        <div class="card card-body">
+          <form action="{%url 'postcomment'%}" method="POST">
+            {% csrf_token %}
+
+            <label for="comment">Post your Reply:</label>
+            <input type="text" class="form-control" name="comment" placeholder="Enter your reply here." /><br />
+
+            <input type="hidden" name="postsno" value="{{blog.sno}}" />
+            <input type="hidden" name="parentsno" value="{{comments.sno}}" />
+            <input type="submit" value="submit" class="btn btn-primary" />
+          </form>
+        </div>
+      </div>
+      {% else %}
+      <span><a data-toggle="collapse" href="#collapseExample" data-target="#reply{{comments.sno}}" role="button"
+          aria-expanded="false" aria-controls="collapseExample" disabled>
+          Login to Reply</span>
+      </a><br />
+      {% endif %}
+      <div class="replies my-2">
+        {% comment %} get_val chai custome template tag ho {% endcomment %}
+        {% for reply in replyDict|get_val:comments.sno %}
+
+        <div class="row my-3 mx-0 ">
+          <div class="col-1 pd-3">
+            <img src="{%static 'images/profile.png'%}" class="rounded mx-0 w-100" />
+          </div>
+          <div class="col-11 pd-3 mx-0">
+            <b>{{comments.user}}</b>
+            <span class="badge badge-secondary">{{comments.Timestamp|naturaltime}}</span><br>
+            <span class="">{{reply.comment}} </span>
+            <br />
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+</div>
+</div>
+
+
 {% endblock body %}}

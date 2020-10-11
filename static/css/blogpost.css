@@ -1,148 +1,130 @@
 #article {
-    width: 938px;
-    /* height: 3024px; */
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 5px 30px 0 rgba(0,0,0,.1);
-    border: 1px solid rgba(0,168,255,.3);
-    margin: 120px auto;
-    margin-bottom: 60px;
+  width: 100%;
+  height: auto;
+  background-color: #ffffff86;
+  border-radius: 5px;
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 168, 255, 0.3);
+  margin: 120px auto;
+  margin-bottom: 60px;
+}
+
+.container1 {
+  height: 100vh;
 }
 
 #cover-image {
-    width: 100%;
-    height: 534px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+  width: 100%;
+  /* height: auto; */
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .blog-meta {
-    width: 100%;
-    height: 108px;
-    padding: 12px 96px 0px 96px;
+  width: 100%;
+  /* height: auto; */
+  padding: 12px 96px 0px 96px;
 }
 
 .blog-meta h1 {
-    font-family: "Raleway";
-    font-size: 28.8px;
-    font-weight: 600;
-    letter-spacing: -1.5px;
+  width: 100%;
+  height: auto;
+  font-family: "Raleway";
+  font-size: 28.8px;
+  font-weight: 600;
+  letter-spacing: -1.5px;
 }
 
 .author {
-    font-family: 'Raleway';
-    font-size: 15px;
-    font-weight: 500;
-    font-style: italic;
-    color: #0096ff;
-    margin-top: 6px;
+  font-family: "Raleway";
+  font-size: 15px;
+  font-weight: 500;
+  font-style: italic;
+  color: #0096ff;
+  margin-top: 6px;
 }
 
 .date {
-    font-family: "Roboto";
-    font-size: 15px;
-    font-weight: 400;
-    font-style: normal;
-    color: #000000;
+  font-family: "Roboto";
+  font-size: 15px;
+  font-weight: 400;
+  font-style: normal;
+  color: #000000;
 }
 
 .blog-content {
-    padding: 2em 6em;
-    padding-top: 0px;
-    overflow: hidden;
+  padding: 2em 6em;
+  padding-top: 0px;
+  overflow: auto;
 }
 
 .blog-content p {
-    font-family: "Raleway";
-    font-size: 15px;
-    line-height: 1.5em;
-    letter-spacing: .2px;
+  font-family: "Raleway";
+  font-size: 15px;
+  line-height: 1.5em;
+  letter-spacing: 0.2px;
 }
 
 strong {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 hr {
-    margin: 0%;
+  margin: 0%;
 }
 
-.author-details {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 160px;
-    padding: 2em 6em;
-    padding-bottom: 0px;
+/* social media icon */
+.icon-bar {
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
-/* .author-pic {
-    width: 128px;
-    height: 128px;
-    margin-right: 32px;
-} */
-
-#author-pic img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    cursor: pointer;
+/* Style the icon bar links */
+.icon-bar a {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 20px;
 }
 
-.author-info {
-    width: 600px;
-    margin-left: 16px;
-    /* height: 128px; */
-    /* padding-top: 36px; */
+/* Style the social media icons with color, if you want */
+.icon-bar a:hover {
+  background-color: #000;
 }
 
-.author-info a {
-    text-decoration: none;
+.facebook {
+  background: #3b5998;
+  color: white;
 }
 
-.author-info p {
-    margin: 0%;
-    padding: 4px 0px;
+.twitter {
+  background: #55acee;
+  color: white;
 }
 
-.author-name {
-    color: rgb(0, 150, 255);;
-    font-family: "Raleway";
-    font-size: 16px;
-    font-weight: 500;
-    font-style: italic;
+.google {
+  background: #dd4b39;
+  color: white;
 }
 
-.author-bio {
-    font-family: "Raleway";
-    font-size: 15px;
-    line-height: 1.5em;
-    letter-spacing: .2px;
+.linkedin {
+  background: #007bb5;
+  color: white;
 }
 
-.tag-container {
-    padding-bottom: 2em;
-    padding-left: 6em;
-    padding-right: 6em;
+.youtube {
+  background: #bb0000;
+  color: white;
 }
 
-.tag-container button {
-    display: inline-block;
-    color: rgb(0, 132, 255);
-    border: 1px solid rgb(0, 132, 255);
-    border-radius: 20px;
-    background-color: transparent;
-    font-family: "Raleway";
-    font-size: 14px;
-    cursor: pointer;
-    min-width: 50px;
-    padding: 6px 14px;
-    margin: 5px;
-}
-
-#bottom-bar {
-    background-color: #172146;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
+@media screen and (max-width: 720) {
+  #article {
+    margin: 60px auto;
+    margin-bottom: 30px;
+  }
 }
